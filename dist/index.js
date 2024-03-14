@@ -10816,7 +10816,6 @@ async function run() {
 	try {
 		// download and install
 		const binPath = await downloadAndInstall(nucleiVersion);
-    console.log('Nuclei installed to:', binPath);
     const params = [];
 
     if (!target && !urls) {

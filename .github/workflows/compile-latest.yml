@@ -32,17 +32,13 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git status
           git add dist/
-          git diff --quiet && git diff --staged --quiet || git commit -m "Update dist with compiled changes"
+          git diff --quiet && git diff --staged --quiet || git commit -m "compile latest changes"
           if [ $? -eq 0 ]; then echo "CHANGES=true" >> $GITHUB_ENV; fi
 
       - name: Push changes
         if: env.CHANGES == 'true'
-        run: |
-          git status
-          echo "there are changes"
-        # uses: ad-m/github-push-action@master
-        # with:
-        #   github_token: ${{ secrets.GITHUB_TOKEN }}
-        #   branch: ${{ github.ref }}
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
